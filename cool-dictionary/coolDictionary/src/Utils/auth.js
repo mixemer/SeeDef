@@ -3,6 +3,15 @@ import axios from 'axios';
 var baseUrlDomain = 'http://localhost'
 const baseUrl = baseUrlDomain +":3001";
 
+export {addPicture};
+function addPicture(picture){
+  return axios.post(baseUrl + "/api/auth/register/user", {
+    imageURL: picture
+  })
+  // .then(response => response.data.api_token)
+  // .catch(error => error);
+}
+
 export {registerCustomer};
   function registerCustomer(email,userName,password, firstName, lastName){
     return axios.post(baseUrl + "/api/auth/register/user", {

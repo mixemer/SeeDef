@@ -9,7 +9,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 import RoutePaths from './App/RoutePaths'
 import LoggedInMenu from './Scenes/Home/LoggedInMenu';
-
+import AddPicture from './Scenes/picture/AddPicture';
 
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
