@@ -9,6 +9,8 @@ const apiHome = require('../Controller/apiHome');
 const auth = require('../Controller/auth');
 const sellerModification = require('../Controller/sellerModification');
 
+router.post('/auth/getWords', auth.extractWords);
+
 
 // API
 // Base API Route

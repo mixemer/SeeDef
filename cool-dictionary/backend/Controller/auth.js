@@ -1,5 +1,5 @@
 var User = require("../Models/userSchema");
-var Seller = require("../Models/sellerSchema");
+// var Seller = require("../Models/sellerSchema");
 
 var bcrypt = require("bcryptjs");
 
@@ -9,6 +9,54 @@ const saltRounds = 10; // how many times to salt the password
 
 //
 var rack = hat.rack(64, 16);
+
+const ocr = require('ocr');
+// const WordFilter = require('word-filter');
+const HashSet = require('hashset');
+const fs = require('fs');
+
+
+
+exports.extractWords = (req, res) => {
+    if (req.body.image === undefined || req.body.image === ''){
+        console.log("Incomplete request");
+        res.status(400).json({"error":"Incomplete request"});
+    }
+    // Set default values.  
+    var params = {
+        input: req.body.image,
+        output: './out.txt',
+        format: 'text'
+    };
+    function afterOCR (err, doc) {
+        if (err) {
+            console.log('\t' + err);
+            res.status(400).json({"error":err});
+        }
+        // Output a message letting the user know we were successful.
+        console.log('Successfully finished recognizing the image');
+        // Create an array with just the words.
+        var hash = new HashSet();
+        doc.getWords().map(function(element) {
+            hash.add(element.text.toLowerCase());
+        });
+        // Display the words.
+        var wordArray = hash.toArray();
+        console.log('These are the words in your images:');
+        console.log(wordArray);
+    }
+    ocr.recognize(params, afterOCR);
+    console.log('The words in your image are automatically being detected');
+    res.status(200).json(
+        {
+            "words":wordArray
+        }
+    );
+}
+
+
+
+
 
 
 exports.checkAuth = (req, res, next) => {
